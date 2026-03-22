@@ -1,3 +1,4 @@
+?
 const path = require('path');
 const crypto = require('crypto');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
@@ -29,8 +30,7 @@ const ENABLE_WEB_SEARCH = process.env.ENABLE_WEB_SEARCH !== 'false';
 // Grok's web search tool - uses xAI's search capabilities
 const WEB_SEARCH_TOOL = {
   type: 'live_search',
-  name: 'web_search',
-  sources: ['web']  // Required field for live_search tool
+  name: 'web_search'
 };
 
 
