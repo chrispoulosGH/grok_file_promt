@@ -27,7 +27,11 @@ const GROK_MODEL = process.env.GROK_MODEL || 'grok-beta';
 const ENABLE_WEB_SEARCH = process.env.ENABLE_WEB_SEARCH !== 'false';
 
 // Grok's web search tool - uses xAI's search capabilities
-const WEB_SEARCH_TOOL = { type: 'live_search', name: 'web_search' };
+const WEB_SEARCH_TOOL = {
+  type: 'live_search',
+  name: 'web_search',
+  sources: ['web']  // Required field for live_search tool
+};
 
 
 // MongoDB connection
