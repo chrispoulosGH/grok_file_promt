@@ -29,7 +29,8 @@ const ENABLE_WEB_SEARCH = process.env.ENABLE_WEB_SEARCH !== 'false';
 // Grok's web search tool - uses xAI's search capabilities
 const WEB_SEARCH_TOOL = {
   type: 'live_search',
-  name: 'web_search'
+  name: 'web_search',
+  sources: []
 };
 
 
@@ -282,8 +283,8 @@ app.post('/generate', async (req, res) => {
     const payload = {
       model: GROK_MODEL,
       messages: processedMessages,
-      max_tokens: 32000,
-      tools: ENABLE_WEB_SEARCH ? [WEB_SEARCH_TOOL] : []
+      max_tokens: 32000
+      // tools: ENABLE_WEB_SEARCH ? [WEB_SEARCH_TOOL] : [] // Deprecated live_search tool
     };
 
     console.log(`Calling Grok API with model ${GROK_MODEL}...`);
