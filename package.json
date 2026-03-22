@@ -7,10 +7,7 @@
     "client"
   ],
   "scripts": {
-    "install-workspace": "yarn install",
-    "start:server": "yarn workspace server start",
-    "start:client": "yarn workspace client dev",
-    "start": "concurrently \"yarn start:server\" \"yarn start:client\""
+    "start": "node server.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
