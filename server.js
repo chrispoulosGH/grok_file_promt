@@ -281,7 +281,8 @@ app.post('/generate', async (req, res) => {
     const payload = {
       model: GROK_MODEL,
       messages: processedMessages,
-      max_tokens: 32000
+      max_tokens: 32000,
+      tools: ENABLE_WEB_SEARCH ? [WEB_SEARCH_TOOL] : []
     };
 
     console.log(`Calling Grok API with model ${GROK_MODEL}...`);
