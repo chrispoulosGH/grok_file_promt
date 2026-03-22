@@ -26,10 +26,8 @@ if (!GROK_KEY) {
 const GROK_MODEL = process.env.GROK_MODEL || 'grok-beta';
 const ENABLE_WEB_SEARCH = process.env.ENABLE_WEB_SEARCH !== 'false';
 
-// Anthropic's built-in web search tool — search is executed server-side by Anthropic,
-// so no custom search implementation is needed.
-// web_search_20260209 is the version that supports claude-opus-4-6 / claude-sonnet-4-6
-const WEB_SEARCH_TOOL = { type: 'web_search_20260209', name: 'web_search' };
+// Grok's web search tool - uses xAI's search capabilities
+const WEB_SEARCH_TOOL = { type: 'live_search', name: 'web_search' };
 
 
 // MongoDB connection
