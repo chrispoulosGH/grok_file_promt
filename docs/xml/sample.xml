@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0">
+  <bpmn:process id="EndToEndOrderProcess" name="Custom Electric Engine End-to-End Order Process" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_Customer" name="Customer">
+        <bpmn:flowNodeRef>CustomerInquiry</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReviewQuote</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ApproveQuote</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PlaceOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Pay50Deposit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReviewSpecs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ApproveSpecs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Pay30BOM</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>WitnessTest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AcceptProduct</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PayFinal5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AcknowledgeDelivery</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SatisfactionSurvey</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Sales" name="Sales">
+        <bpmn:flowNodeRef>CustomerInquiry</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>LogInquiry</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GenerateQuote</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendQuote</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>OrderConfirmationEmail</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Engineering" name="Engineering">
+        <bpmn:flowNodeRef>ReceiveSpecs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DevelopSpecs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ScheduleReview</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendDraftSpecs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SpecRevisionLoop</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinalSpecApproval</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GenerateBOM</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Issue30Invoice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>MfgPlanning</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TrainAssembly</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinalizeTests</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_SupplyChain" name="Supply Chain">
+        <bpmn:flowNodeRef>EnterOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AnalyzeBOM</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EvalSuppliers</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DistributeRFQ</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReceiveBids</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EvalBids</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SelectSuppliers</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IssuePO</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SourceComponents</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TrackShipments</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReceiveInspect</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>HandleDefects</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StoreAllocate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Issue15Invoice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PaySuppliers</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Manufacturing" name="Manufacturing">
+        <bpmn:flowNodeRef>Gate3ComponentsReady</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PickComponents</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>AssembleEngine</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>InProcessQC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinalVerify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>MfgStartNotification</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_QA" name="QA">
+        <bpmn:flowNodeRef>PerformanceTest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SafetyCompliance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DocumentResults</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ResolveIssues</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>QASignoff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TestResultsNotification</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gate4TestingPassed</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Logistics" name="Logistics">
+        <bpmn:flowNodeRef>PackageShip</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>TrackDelivery</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DeliveryConfirm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>DeliveryNotification</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Finance" name="Finance">
+        <bpmn:flowNodeRef>Validate50Payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gate1OrderConfirmed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Validate30Payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gate2SpecsApproved</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Validate15Payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IssueFinal5Invoice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>CollectFinalPayment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gate5FinalPayment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ARReconciliation</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_PostDelivery" name="Post-Delivery">
+        <bpmn:flowNodeRef>ActivateWarranty</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReportMetrics</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>CaptureLessons</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="CustomerInquiry" name="Customer Inquiry">
+      <bpmn:outgoing>Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="ApproveQuote" name="Approve Quote" />
+    <bpmn:task id="ApproveSpecs" name="Approve Specs" />
+    <bpmn:task id="LogInquiry" name="Log Customer Inquiry">
+      <bpmn:incoming>Flow1</bpmn:incoming>
+      <bpmn:outgoing>Flow2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="GenerateQuote" name="Generate Initial Quote">
+      <bpmn:incoming>Flow2</bpmn:incoming>
+      <bpmn:outgoing>Flow3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sendTask id="SendQuote" name="Send Quote to Customer">
+      <bpmn:incoming>Flow3</bpmn:incoming>
+      <bpmn:outgoing>Flow4</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:task id="ReviewQuote" name="Customer Reviews Quote">
+      <bpmn:outgoing>Flow5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="QuoteApprovedGW" name="Approved?">
+      <bpmn:incoming>Flow5</bpmn:incoming>
+      <bpmn:outgoing>Flow6</bpmn:outgoing>
+      <bpmn:outgoing>FlowReject</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="PlaceOrder" name="Place Order &amp; Sign Agreement">
+      <bpmn:incoming>Flow6</bpmn:incoming>
+      <bpmn:outgoing>Flow7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Pay50Deposit" name="Pay 50% Deposit">
+      <bpmn:incoming>Flow7</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:task id="Validate50Payment" name="Validate 50% Payment">
+      <bpmn:outgoing>Flow8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gate1OrderConfirmed" name="Gate 1: Order Confirmed">
+      <bpmn:incoming>Flow8</bpmn:incoming>
+      <bpmn:outgoing>Flow9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="OrderConfirmationEmail" name="Send Order Confirmation Email">
+      <bpmn:incoming>Flow9</bpmn:incoming>
+      <bpmn:outgoing>Flow10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="EnterOrder" name="Enter Order &amp; Assign ID">
+      <bpmn:incoming>Flow10</bpmn:incoming>
+      <bpmn:outgoing>Flow11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="ParallelSplit1" name="Parallel: Specs &amp; Supply">
+      <bpmn:incoming>Flow11</bpmn:incoming>
+      <bpmn:outgoing>Flow12A</bpmn:outgoing>
+      <bpmn:outgoing>Flow12B</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <!-- Stream A: Engineering/Specs -->
+    <bpmn:task id="ReceiveSpecs" name="Eng Receive Specs">
+      <bpmn:incoming>Flow12A</bpmn:incoming>
+      <bpmn:outgoing>Flow13A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="DevelopSpecs" name="Develop Detailed Specs">
+      <bpmn:incoming>Flow13A</bpmn:incoming>
+      <bpmn:outgoing>Flow14A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="ScheduleReview" name="Schedule Customer Review">
+      <bpmn:incoming>Flow14A</bpmn:incoming>
+      <bpmn:outgoing>Flow15A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sendTask id="SendDraftSpecs" name="Send Draft Specs to Customer">
+      <bpmn:incoming>Flow15A</bpmn:incoming>
+      <bpmn:outgoing>Flow16A</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:task id="ReviewSpecs" name="Customer Technical Review">
+      <bpmn:outgoing>Flow17A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="SpecsApprovedGW" name="Specs OK?">
+      <bpmn:incoming>Flow17A</bpmn:incoming>
+      <bpmn:outgoing>Flow18A</bpmn:outgoing>
+      <bpmn:outgoing>FlowLoopBack</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="SpecRevisionLoop" name="Revise Specs">
+      <bpmn:incoming>FlowLoopBack</bpmn:incoming>
+      <bpmn:outgoing>Flow15A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="FinalSpecApproval" name="Final Spec Signoff">
+      <bpmn:incoming>Flow18A</bpmn:incoming>
+      <bpmn:outgoing>Flow19A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="GenerateBOM" name="Generate BOM">
+      <bpmn:incoming>Flow19A</bpmn:incoming>
+      <bpmn:outgoing>Flow20A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Issue30Invoice" name="Issue 30% BOM Invoice">
+      <bpmn:incoming>Flow20A</bpmn:incoming>
+      <bpmn:outgoing>Flow21A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Pay30BOM" name="Pay 30% BOM">
+      <bpmn:incoming>Flow21A</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:task id="Validate30Payment" name="Validate 30% Payment">
+      <bpmn:outgoing>Flow22A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gate2SpecsApproved" name="Gate 2: Specs Approved">
+      <bpmn:incoming>Flow22A</bpmn:incoming>
+      <bpmn:outgoing>Flow23</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <!-- Stream B: Supply -->
+    <bpmn:task id="AnalyzeBOM" name="Analyze BOM Requirements">
+      <bpmn:incoming>Flow12B</bpmn:incoming>
+      <bpmn:outgoing>Flow13B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="EvalSuppliers" name="Evaluate Suppliers">
+      <bpmn:incoming>Flow13B</bpmn:incoming>
+      <bpmn:outgoing>Flow14B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="DistributeRFQ" name="Distribute RFQ">
+      <bpmn:incoming>Flow14B</bpmn:incoming>
+      <bpmn:outgoing>Flow15B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="ReceiveBids" name="Receive &amp; Eval Bids">
+      <bpmn:incoming>Flow15B</bpmn:incoming>
+      <bpmn:outgoing>Flow16B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="EvalBids" name="Cost/Quality Analysis">
+      <bpmn:incoming>Flow16B</bpmn:incoming>
+      <bpmn:outgoing>Flow17B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SelectSuppliers" name="Select Suppliers">
+      <bpmn:incoming>Flow17B</bpmn:incoming>
+      <bpmn:outgoing>Flow18B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="IssuePO" name="Issue Purchase Orders">
+      <bpmn:incoming>Flow18B</bpmn:incoming>
+      <bpmn:outgoing>Flow19B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="ParallelJoin1" name="Join Specs/PO">
+      <bpmn:incoming>Flow23</bpmn:incoming>
+      <bpmn:incoming>Flow19B</bpmn:incoming>
+      <bpmn:outgoing>Flow24</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:parallelGateway id="ParallelSplit2" name="Parallel: Sourcing &amp; Mfg Prep">
+      <bpmn:incoming>Flow24</bpmn:incoming>
+      <bpmn:outgoing>Flow25A</bpmn:outgoing>
+      <bpmn:outgoing>Flow25B</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <!-- Supply Execution -->
+    <bpmn:task id="SourceComponents" name="Suppliers Source Components">
+      <bpmn:incoming>Flow25A</bpmn:incoming>
+      <bpmn:outgoing>Flow26A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="TrackShipments" name="Track Incoming Shipments">
+      <bpmn:incoming>Flow26A</bpmn:incoming>
+      <bpmn:outgoing>Flow27A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="ReceiveInspect" name="Quality Inspection">
+      <bpmn:incoming>Flow27A</bpmn:incoming>
+      <bpmn:outgoing>Flow28A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="DefectsGW" name="Defects?">
+      <bpmn:incoming>Flow28A</bpmn:incoming>
+      <bpmn:outgoing>Flow29A</bpmn:outgoing>
+      <bpmn:outgoing>FlowDefect</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="HandleDefects" name="Handle Defects/Returns">
+      <bpmn:incoming>FlowDefect</bpmn:incoming>
+      <bpmn:outgoing>Flow27A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="StoreAllocate" name="Store &amp; Allocate Components">
+      <bpmn:incoming>Flow29A</bpmn:incoming>
+      <bpmn:outgoing>Flow30A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Issue15Invoice" name="Issue 15% Components Invoice">
+      <bpmn:incoming>Flow30A</bpmn:incoming>
+      <bpmn:outgoing>Flow31</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Validate15Payment" name="Validate 15% Payment">
+      <bpmn:incoming>Flow31</bpmn:incoming>
+      <bpmn:outgoing>Flow32</bpmn:outgoing>
+    </bpmn:task>
+    <!-- Mfg Prep -->
+    <bpmn:task id="MfgPlanning" name="Create Mfg Schedule">
+      <bpmn:incoming>Flow25B</bpmn:incoming>
+      <bpmn:outgoing>Flow33B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="TrainAssembly" name="Train Assembly Team">
+      <bpmn:incoming>Flow33B</bpmn:incoming>
+      <bpmn:outgoing>Flow34B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="FinalizeTests" name="Finalize Testing Protocols">
+      <bpmn:incoming>Flow34B</bpmn:incoming>
+      <bpmn:outgoing>Flow35</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gate3ComponentsReady" name="Gate 3: All Components Received">
+      <bpmn:incoming>Flow32</bpmn:incoming>
+      <bpmn:incoming>Flow35</bpmn:incoming>
+      <bpmn:outgoing>Flow36</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="PickComponents" name="Pick Components">
+      <bpmn:incoming>Flow36</bpmn:incoming>
+      <bpmn:outgoing>Flow37</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="AssembleEngine" name="Assemble Engine">
+      <bpmn:incoming>Flow37</bpmn:incoming>
+      <bpmn:outgoing>Flow38</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sendTask id="MfgStartNotification" name="Notify Customer: Mfg Start">
+      <bpmn:incoming>Flow38</bpmn:incoming>
+      <bpmn:outgoing>Flow39</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:task id="InProcessQC" name="In-Process Quality Checks">
+      <bpmn:incoming>Flow39</bpmn:incoming>
+      <bpmn:outgoing>Flow40</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="FinalVerify" name="Final Assembly Verification">
+      <bpmn:incoming>Flow40</bpmn:incoming>
+      <bpmn:outgoing>Flow41</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="ParallelSplit3" name="Parallel: Testing &amp; Acceptance">
+      <bpmn:incoming>Flow41</bpmn:incoming>
+      <bpmn:outgoing>Flow42A</bpmn:outgoing>
+      <bpmn:outgoing>Flow42B</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <!-- Testing Stream -->
+    <bpmn:task id="PerformanceTest" name="Performance Testing">
+      <bpmn:incoming>Flow42A</bpmn:incoming>
+      <bpmn:outgoing>Flow43A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SafetyCompliance" name="Safety/Compliance Validation">
+      <bpmn:incoming>Flow43A</bpmn:incoming>
+      <bpmn:outgoing>Flow44A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="DocumentResults" name="Document Test Results">
+      <bpmn:incoming>Flow44A</bpmn:incoming>
+      <bpmn:outgoing>Flow45A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="IssuesGW" name="Issues?">
+      <bpmn:incoming>Flow45A</bpmn:incoming>
+      <bpmn:outgoing>Flow46A</bpmn:outgoing>
+      <bpmn:outgoing>FlowIssueLoop</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="ResolveIssues" name="Resolve Issues">
+      <bpmn:incoming>FlowIssueLoop</bpmn:incoming>
+      <bpmn:outgoing>Flow43A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="QASignoff" name="QA Final Sign-off">
+      <bpmn:incoming>Flow46A</bpmn:incoming>
+      <bpmn:outgoing>Flow47A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sendTask id="TestResultsNotification" name="Notify Customer: Testing Complete">
+      <bpmn:incoming>Flow47A</bpmn:incoming>
+      <bpmn:outgoing>Flow48</bpmn:outgoing>
+    </bpmn:sendTask>
+    <!-- Acceptance Stream -->
+    <bpmn:task id="WitnessTest" name="Optional Witness Testing">
+      <bpmn:incoming>Flow42B</bpmn:incoming>
+      <bpmn:outgoing>Flow49B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="AcceptProduct" name="Customer Acceptance">
+      <bpmn:incoming>Flow49B</bpmn:incoming>
+      <bpmn:outgoing>Flow50</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="ParallelJoin2" name="Join Testing/Acceptance">
+      <bpmn:incoming>Flow48</bpmn:incoming>
+      <bpmn:incoming>Flow50</bpmn:incoming>
+      <bpmn:outgoing>Flow51</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:exclusiveGateway id="Gate4TestingPassed" name="Gate 4: Testing Passed">
+      <bpmn:incoming>Flow51</bpmn:incoming>
+      <bpmn:outgoing>Flow52</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="ParallelSplit4" name="Parallel: Logistics &amp; Finance">
+      <bpmn:incoming>Flow52</bpmn:incoming>
+      <bpmn:outgoing>Flow53A</bpmn:outgoing>
+      <bpmn:outgoing>Flow53B</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="PackageShip" name="Package &amp; Ship">
+      <bpmn:incoming>Flow53A</bpmn:incoming>
+      <bpmn:outgoing>Flow54A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sendTask id="DeliveryNotification" name="Send Delivery Notification &amp; Tracking">
+      <bpmn:incoming>Flow54A</bpmn:incoming>
+      <bpmn:outgoing>Flow55A</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:task id="TrackDelivery" name="Real-time Tracking">
+      <bpmn:incoming>Flow55A</bpmn:incoming>
+      <bpmn:outgoing>Flow56</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="IssueFinal5Invoice" name="Issue Final 5% Invoice">
+      <bpmn:incoming>Flow53B</bpmn:incoming>
+      <bpmn:outgoing>Flow57B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="PayFinal5" name="Pay Final 5%">
+      <bpmn:incoming>Flow57B</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:task id="CollectFinalPayment" name="Collect Final Payment">
+      <bpmn:outgoing>Flow58</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gate5FinalPayment" name="Gate 5: Final Payment Received">
+      <bpmn:incoming>Flow58</bpmn:incoming>
+      <bpmn:outgoing>Flow59</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="ParallelJoin3" name="Join Delivery/Finance">
+      <bpmn:incoming>Flow56</bpmn:incoming>
+      <bpmn:incoming>Flow59</bpmn:incoming>
+      <bpmn:outgoing>Flow60</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="DeliveryConfirm" name="Confirm Delivery">
+      <bpmn:incoming>Flow60</bpmn:incoming>
+      <bpmn:outgoing>Flow61</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="AcknowledgeDelivery" name="Customer Acknowledgment">
+      <bpmn:incoming>Flow61</bpmn:incoming>
+      <bpmn:outgoing>Flow62</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gate6DeliveryConfirmed" name="Gate 6: Delivery Confirmed">
+      <bpmn:incoming>Flow62</bpmn:incoming>
+      <bpmn:outgoing>Flow63</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="ARReconciliation" name="AR Reconciliation">
+      <bpmn:incoming>Flow63</bpmn:incoming>
+      <bpmn:outgoing>Flow64</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="PaySuppliers" name="Process Supplier Payments">
+      <bpmn:incoming>Flow64</bpmn:incoming>
+      <bpmn:outgoing>Flow65</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="ActivateWarranty" name="Activate Warranty">
+      <bpmn:incoming>Flow65</bpmn:incoming>
+      <bpmn:outgoing>Flow66</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SatisfactionSurvey" name="Send Satisfaction Survey">
+      <bpmn:incoming>Flow66</bpmn:incoming>
+      <bpmn:outgoing>Flow67</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="ReportMetrics" name="Report Performance Metrics">
+      <bpmn:incoming>Flow67</bpmn:incoming>
+      <bpmn:outgoing>Flow68</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="CaptureLessons" name="Capture Lessons Learned">
+      <bpmn:incoming>Flow68</bpmn:incoming>
+      <bpmn:outgoing>Flow69</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent" name="Order Complete">
+      <bpmn:incoming>Flow69</bpmn:incoming>
+    </bpmn:endEvent>
+    <!-- Reject Flow (simplified) -->
+    <bpmn:endEvent id="RejectEnd" name="Order Rejected">
+      <bpmn:incoming>FlowReject</bpmn:incoming>
+    </bpmn:endEvent>
+    <!-- Sequence Flows -->
+    <bpmn:sequenceFlow id="Flow1" sourceRef="CustomerInquiry" targetRef="LogInquiry" />
+    <bpmn:sequenceFlow id="Flow2" sourceRef="LogInquiry" targetRef="GenerateQuote" />
+    <bpmn:sequenceFlow id="Flow3" sourceRef="GenerateQuote" targetRef="SendQuote" />
+    <bpmn:sequenceFlow id="Flow4" sourceRef="SendQuote" targetRef="ReviewQuote" />
+    <bpmn:sequenceFlow id="Flow5" sourceRef="ReviewQuote" targetRef="QuoteApprovedGW" />
+    <bpmn:sequenceFlow id="Flow6" sourceRef="QuoteApprovedGW" targetRef="PlaceOrder" />
+    <bpmn:sequenceFlow id="FlowReject" sourceRef="QuoteApprovedGW" targetRef="RejectEnd" />
+    <bpmn:sequenceFlow id="Flow7" sourceRef="PlaceOrder" targetRef="Pay50Deposit" />
+    <bpmn:sequenceFlow id="Flow8" sourceRef="Validate50Payment" targetRef="Gate1OrderConfirmed" />
+    <bpmn:sequenceFlow id="Flow9" sourceRef="Gate1OrderConfirmed" targetRef="OrderConfirmationEmail" />
+    <bpmn:sequenceFlow id="Flow10" sourceRef="OrderConfirmationEmail" targetRef="EnterOrder" />
+    <bpmn:sequenceFlow id="Flow11" sourceRef="EnterOrder" targetRef="ParallelSplit1" />
+    <bpmn:sequenceFlow id="Flow12A" sourceRef="ParallelSplit1" targetRef="ReceiveSpecs" />
+    <bpmn:sequenceFlow id="Flow12B" sourceRef="ParallelSplit1" targetRef="AnalyzeBOM" />
+    <bpmn:sequenceFlow id="Flow13A" sourceRef="ReceiveSpecs" targetRef="DevelopSpecs" />
+    <bpmn:sequenceFlow id="Flow14A" sourceRef="DevelopSpecs" targetRef="ScheduleReview" />
+    <bpmn:sequenceFlow id="Flow15A" sourceRef="ScheduleReview" targetRef="SendDraftSpecs" />
+    <bpmn:sequenceFlow id="Flow16A" sourceRef="SendDraftSpecs" targetRef="ReviewSpecs" />
+    <bpmn:sequenceFlow id="Flow17A" sourceRef="ReviewSpecs" targetRef="SpecsApprovedGW" />
+    <bpmn:sequenceFlow id="Flow18A" sourceRef="SpecsApprovedGW" targetRef="FinalSpecApproval" />
+    <bpmn:sequenceFlow id="FlowLoopBack" sourceRef="SpecsApprovedGW" targetRef="SpecRevisionLoop" />
+    <bpmn:sequenceFlow id="Flow19A" sourceRef="FinalSpecApproval" targetRef="GenerateBOM" />
+    <bpmn:sequenceFlow id="Flow20A" sourceRef="GenerateBOM" targetRef="Issue30Invoice" />
+    <bpmn:sequenceFlow id="Flow21A" sourceRef="Issue30Invoice" targetRef="Pay30BOM" />
+    <bpmn:sequenceFlow id="Flow22A" sourceRef="Validate30Payment" targetRef="Gate2SpecsApproved" />
+    <bpmn:sequenceFlow id="Flow23" sourceRef="Gate2SpecsApproved" targetRef="ParallelJoin1" />
+    <bpmn:sequenceFlow id="Flow13B" sourceRef="AnalyzeBOM" targetRef="EvalSuppliers" />
+    <bpmn:sequenceFlow id="Flow14B" sourceRef="EvalSuppliers" targetRef="DistributeRFQ" />
+    <bpmn:sequenceFlow id="Flow15B" sourceRef="DistributeRFQ" targetRef="ReceiveBids" />
+    <bpmn:sequenceFlow id="Flow16B" sourceRef="ReceiveBids" targetRef="EvalBids" />
+    <bpmn:sequenceFlow id="Flow17B" sourceRef="EvalBids" targetRef="SelectSuppliers" />
+    <bpmn:sequenceFlow id="Flow18B" sourceRef="SelectSuppliers" targetRef="IssuePO" />
+    <bpmn:sequenceFlow id="Flow19B" sourceRef="IssuePO" targetRef="ParallelJoin1" />
+    <bpmn:sequenceFlow id="Flow24" sourceRef="ParallelJoin1" targetRef="ParallelSplit2" />
+    <bpmn:sequenceFlow id="Flow25A" sourceRef="ParallelSplit2" targetRef="SourceComponents" />
+    <bpmn:sequenceFlow id="Flow25B" sourceRef="ParallelSplit2" targetRef="MfgPlanning" />
+    <bpmn:sequenceFlow id="Flow26A" sourceRef="SourceComponents" targetRef="TrackShipments" />
+    <bpmn:sequenceFlow id="Flow27A" sourceRef="TrackShipments" targetRef="ReceiveInspect" />
+    <bpmn:sequenceFlow id="Flow28A" sourceRef="ReceiveInspect" targetRef="DefectsGW" />
+    <bpmn:sequenceFlow id="Flow29A" sourceRef="DefectsGW" targetRef="StoreAllocate" />
+    <bpmn:sequenceFlow id="FlowDefect" sourceRef="DefectsGW" targetRef="HandleDefects" />
+    <bpmn:sequenceFlow id="Flow30A" sourceRef="StoreAllocate" targetRef="Issue15Invoice" />
+    <bpmn:sequenceFlow id="Flow31" sourceRef="Issue15Invoice" targetRef="Validate15Payment" />
+    <bpmn:sequenceFlow id="Flow32" sourceRef="Validate15Payment" targetRef="Gate3ComponentsReady" />
+    <bpmn:sequenceFlow id="Flow33B" sourceRef="MfgPlanning" targetRef="TrainAssembly" />
+    <bpmn:sequenceFlow id="Flow34B" sourceRef="TrainAssembly" targetRef="FinalizeTests" />
+    <bpmn:sequenceFlow id="Flow35" sourceRef="FinalizeTests" targetRef="Gate3ComponentsReady" />
+    <bpmn:sequenceFlow id="Flow36" sourceRef="Gate3ComponentsReady" targetRef="PickComponents" />
+    <bpmn:sequenceFlow id="Flow37" sourceRef="PickComponents" targetRef="AssembleEngine" />
+    <bpmn:sequenceFlow id="Flow38" sourceRef="AssembleEngine" targetRef="MfgStartNotification" />
+    <bpmn:sequenceFlow id="Flow39" sourceRef="MfgStartNotification" targetRef="InProcessQC" />
+    <bpmn:sequenceFlow id="Flow40" sourceRef="InProcessQC" targetRef="FinalVerify" />
+    <bpmn:sequenceFlow id="Flow41" sourceRef="FinalVerify" targetRef="ParallelSplit3" />
+    <bpmn:sequenceFlow id="Flow42A" sourceRef="ParallelSplit3" targetRef="PerformanceTest" />
+    <bpmn:sequenceFlow id="Flow42B" sourceRef="ParallelSplit3" targetRef="WitnessTest" />
+    <bpmn:sequenceFlow id="Flow43A" sourceRef="PerformanceTest" targetRef="SafetyCompliance" />
+    <bpmn:sequenceFlow id="Flow44A" sourceRef="SafetyCompliance" targetRef="DocumentResults" />
+    <bpmn:sequenceFlow id="Flow45A" sourceRef="DocumentResults" targetRef="IssuesGW" />
+    <bpmn:sequenceFlow id="Flow46A" sourceRef="IssuesGW" targetRef="QASignoff" />
+    <bpmn:sequenceFlow id="FlowIssueLoop" sourceRef="IssuesGW" targetRef="ResolveIssues" />
+    <bpmn:sequenceFlow id="Flow47A" sourceRef="QASignoff" targetRef="TestResultsNotification" />
+    <bpmn:sequenceFlow id="Flow48" sourceRef="TestResultsNotification" targetRef="ParallelJoin2" />
+    <bpmn:sequenceFlow id="Flow49B" sourceRef="WitnessTest" targetRef="AcceptProduct" />
+    <bpmn:sequenceFlow id="Flow50" sourceRef="AcceptProduct" targetRef="ParallelJoin2" />
+    <bpmn:sequenceFlow id="Flow51" sourceRef="ParallelJoin2" targetRef="Gate4TestingPassed" />
+    <bpmn:sequenceFlow id="Flow52" sourceRef="Gate4TestingPassed" targetRef="ParallelSplit4" />
+    <bpmn:sequenceFlow id="Flow53A" sourceRef="ParallelSplit4" targetRef="PackageShip" />
+    <bpmn:sequenceFlow id="Flow53B" sourceRef="ParallelSplit4" targetRef="IssueFinal5Invoice" />
+    <bpmn:sequenceFlow id="Flow54A" sourceRef="PackageShip" targetRef="DeliveryNotification" />
+    <bpmn:sequenceFlow id="Flow55A" sourceRef="DeliveryNotification" targetRef="TrackDelivery" />
+    <bpmn:sequenceFlow id="Flow56" sourceRef="TrackDelivery" targetRef="ParallelJoin3" />
+    <bpmn:sequenceFlow id="Flow57B" sourceRef="IssueFinal5Invoice" targetRef="PayFinal5" />
+    <bpmn:sequenceFlow id="Flow58" sourceRef="CollectFinalPayment" targetRef="Gate5FinalPayment" />
+    <bpmn:sequenceFlow id="Flow59" sourceRef="Gate5FinalPayment" targetRef="ParallelJoin3" />
+    <bpmn:sequenceFlow id="Flow60" sourceRef="ParallelJoin3" targetRef="DeliveryConfirm" />
+    <bpmn:sequenceFlow id="Flow61" sourceRef="DeliveryConfirm" targetRef="AcknowledgeDelivery" />
+    <bpmn:sequenceFlow id="Flow62" sourceRef="AcknowledgeDelivery" targetRef="Gate6DeliveryConfirmed" />
+    <bpmn:sequenceFlow id="Flow63" sourceRef="Gate6DeliveryConfirmed" targetRef="ARReconciliation" />
+    <bpmn:sequenceFlow id="Flow64" sourceRef="ARReconciliation" targetRef="PaySuppliers" />
+    <bpmn:sequenceFlow id="Flow65" sourceRef="PaySuppliers" targetRef="ActivateWarranty" />
+    <bpmn:sequenceFlow id="Flow66" sourceRef="ActivateWarranty" targetRef="SatisfactionSurvey" />
+    <bpmn:sequenceFlow id="Flow67" sourceRef="SatisfactionSurvey" targetRef="ReportMetrics" />
+    <bpmn:sequenceFlow id="Flow68" sourceRef="ReportMetrics" targetRef="CaptureLessons" />
+    <bpmn:sequenceFlow id="Flow69" sourceRef="CaptureLessons" targetRef="EndEvent" />
+
+  </bpmn:process>
+
+
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="EndToEndOrderProcess">
+      <!-- BPMN Shape definitions would go here -->
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

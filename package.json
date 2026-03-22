@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "grok-file-manager",
+  "version": "0.1.0",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install-workspace": "yarn install",
+    "start:server": "yarn workspace server start",
+    "start:client": "yarn workspace client dev",
+    "start": "concurrently \"yarn start:server\" \"yarn start:client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "docx": "^9.6.1"
+  }
+}
