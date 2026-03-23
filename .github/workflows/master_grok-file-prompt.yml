@@ -62,4 +62,6 @@ jobs:
           app-name: 'grok-file-prompt'
           slot-name: 'Production'
           package: .
+          take-app-offline: true
+          clean: true
           
