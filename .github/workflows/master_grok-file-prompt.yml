@@ -68,4 +68,5 @@ jobs:
           package: .
           take-app-offline: true
           clean: true
+          restart: true
           
