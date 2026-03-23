@@ -422,8 +422,17 @@ app.get('/tags', async (req, res) => {
 // Serve built React client in production (after `yarn build` in client/)
 const clientDist = path.join(__dirname, '../client/dist');
 if (fs.existsSync(clientDist)) {
-  app.use(express.static(clientDist));
-  app.get('*', (_req, res) => res.sendFile(path.join(clientDist, 'index.html')));
+  app.use(express.static(clientDist, {
+    setHeaders: (res, path) => {
+      if (path.endsWith('.html')) {
+        res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https:; font-src 'self' data:;");
+      }
+    }
+  }));
+  app.get('*', (_req, res) => {
+    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https:; font-src 'self' data:;");
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
   console.log('Serving React client from', clientDist);
 }
 
