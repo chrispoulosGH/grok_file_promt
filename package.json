@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "dev": "concurrently \"npm start\" \"cd client && npm run dev\""
+    "dev": "concurrently \"npm start\" \"cd client && npm run dev\"",
+    "build": "cd client && npm run build"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
